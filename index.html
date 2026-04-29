@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎓 Mis Puntos - Plataforma Académica</title>
+    <title>🎓 Bio-Puntos · 4to Secundaria - María Reina Marianistas</title>
     <style>
         * {
             margin: 0;
@@ -13,13 +13,13 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00a8e8 0%, #00c9ff 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -28,33 +28,81 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00a8e8 0%, #00c9ff 100%);
             color: white;
             padding: 30px 20px;
             text-align: center;
         }
 
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .header-logo img {
+            width: 80px;
+            height: auto;
+        }
+
         .header h1 {
             font-size: 2.5em;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .header p {
             font-size: 1.1em;
             opacity: 0.95;
+            margin-bottom: 5px;
+        }
+
+        .header .subtitle {
+            font-size: 0.95em;
+            opacity: 0.85;
         }
 
         .content {
             padding: 30px 20px;
         }
 
+        .section-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .section-btn {
+            padding: 12px 24px;
+            border: 2px solid #00a8e8;
+            background: white;
+            color: #00a8e8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .section-btn:hover {
+            background: #f0f7ff;
+        }
+
+        .section-btn.active {
+            background: #00a8e8;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 168, 232, 0.3);
+        }
+
         .search-container {
             margin-bottom: 30px;
         }
 
-        .search-container input,
-        .search-container select {
+        .search-container input {
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
@@ -64,23 +112,10 @@
             transition: all 0.3s ease;
         }
 
-        .search-container input:focus,
-        .search-container select:focus {
+        .search-container input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
-        }
-
-        .filters {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .filters select {
-            flex: 1;
-            min-width: 150px;
+            border-color: #00a8e8;
+            box-shadow: 0 0 10px rgba(0, 168, 232, 0.3);
         }
 
         .stats {
@@ -91,12 +126,12 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00a8e8 0%, #00c9ff 100%);
             color: white;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 168, 232, 0.3);
         }
 
         .stat-card h3 {
@@ -129,13 +164,9 @@
         }
 
         .student-card:hover {
-            border-color: #667eea;
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+            border-color: #00a8e8;
+            box-shadow: 0 6px 20px rgba(0, 168, 232, 0.3);
             transform: translateY(-5px);
-        }
-
-        .student-card.hidden {
-            display: none;
         }
 
         .student-header {
@@ -150,12 +181,12 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00a8e8 0%, #00c9ff 100%);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5em;
+            font-size: 2em;
             font-weight: bold;
             margin-right: 15px;
             flex-shrink: 0;
@@ -172,19 +203,8 @@
             font-size: 0.9em;
         }
 
-        .student-grade {
-            background: #f0f0f0;
-            color: #667eea;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.85em;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
         .points-display {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00a8e8 0%, #00c9ff 100%);
             color: white;
             padding: 15px;
             border-radius: 8px;
@@ -205,12 +225,15 @@
             margin-top: 5px;
         }
 
-        .email {
-            color: #999;
-            font-size: 0.85em;
-            word-break: break-all;
-            padding-top: 10px;
-            border-top: 1px solid #f0f0f0;
+        .badge-rank {
+            display: inline-block;
+            background: #ffc107;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 5px;
         }
 
         .empty-state {
@@ -227,7 +250,7 @@
         .loading {
             text-align: center;
             padding: 40px 20px;
-            color: #667eea;
+            color: #00a8e8;
             font-size: 1.1em;
         }
 
@@ -244,51 +267,48 @@
                 grid-template-columns: 1fr;
             }
 
-            .filters {
+            .section-tabs {
                 flex-direction: column;
             }
 
-            .filters select {
-                min-width: unset;
+            .section-btn {
+                width: 100%;
             }
 
             .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-
-        .badge-rank {
-            display: inline-block;
-            background: #ffc107;
-            color: #333;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-top: 5px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎓 Mis Puntos</h1>
-            <p>Plataforma de Visualización de Puntos Académicos</p>
+            <div class="header-logo">
+                <div>
+                    <h1>🔬 Bio-Puntos</h1>
+                    <p>Tabla de Puntuación - 4to Secundaria</p>
+                    <div class="subtitle">I TRIMESTRE · María Reina Marianistas</div>
+                </div>
+            </div>
         </div>
 
         <div class="content">
-            <!-- Búsqueda y Filtros -->
+            <!-- Botones de Secciones -->
+            <div class="section-tabs">
+                <button class="section-btn active" onclick="loadSection('4A')">📘 Sección 4A</button>
+                <button class="section-btn" onclick="loadSection('4B')">📗 Sección 4B</button>
+                <button class="section-btn" onclick="loadSection('4C')">📙 Sección 4C</button>
+                <button class="section-btn" onclick="loadSection('4D')">📕 Sección 4D</button>
+            </div>
+
+            <!-- Búsqueda -->
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="🔍 Busca por nombre de estudiante...">
-                <div class="filters">
-                    <select id="gradeFilter">
-                        <option value="">📚 Todos los Grados</option>
-                    </select>
-                </div>
             </div>
 
             <!-- Estadísticas -->
-            <div class="stats" id="statsContainer">
+            <div class="stats">
                 <div class="stat-card">
                     <h3>Total Estudiantes</h3>
                     <div class="value" id="totalStudents">0</div>
@@ -313,72 +333,153 @@
             </div>
             <div id="emptyState" class="empty-state" style="display: none;">
                 <h2>No se encontraron estudiantes</h2>
-                <p>Intenta cambiar tus filtros o búsqueda</p>
+                <p>Intenta cambiar tu búsqueda</p>
             </div>
             <div class="students-list" id="studentsList"></div>
         </div>
     </div>
 
     <script>
-        let allStudents = [];
+        let sectionsData = {
+            '4A': [],
+            '4B': [],
+            '4C': [],
+            '4D': []
+        };
+        let currentSection = '4A';
         let filteredStudents = [];
 
-        // Cargar datos desde JSON
-        async function loadStudents() {
+        // Parsear tabla markdown a array de estudiantes
+        async function parseMarkdownTable(url) {
             try {
-                const response = await fetch('estudiantes.json');
-                if (!response.ok) throw new Error('No se pudo cargar el archivo');
-                allStudents = await response.json();
+                const response = await fetch(url);
+                const text = await response.text();
                 
-                // Validar que sea un array
-                if (!Array.isArray(allStudents)) {
-                    allStudents = [];
+                // Buscar la sección de "Estudiantes por Puntos"
+                const studentsMatch = text.match(/## 📋 Estudiantes por Puntos[\s\S]*?(?=---|\*Generado|$)/);
+                if (!studentsMatch) return [];
+
+                const content = studentsMatch[0];
+                const students = [];
+                
+                // Regex para extraer estudiantes: emoji + nombre
+                const studentRegex = /^- ([\s\S]*?) ([A-Za-záéíóúñ\s,]+)$/gm;
+                let match;
+
+                // Extraer puntos de cada sección
+                const pointsSections = content.split(/### Puntos \d+/);
+                
+                let pointsValue = 17; // Valor inicial
+                for (let i = 1; i < pointsSections.length; i++) {
+                    const pointsMatch = content.match(new RegExp(`### Puntos (\\d+)`));
+                    if (pointsMatch) {
+                        pointsValue = parseInt(pointsMatch[1]);
+                    }
+                    
+                    const sectionContent = pointsSections[i];
+                    const lines = sectionContent.split('\n');
+                    
+                    for (const line of lines) {
+                        const studentMatch = line.match(/^- ([\s\S]?) (.+)$/);
+                        if (studentMatch) {
+                            const emoji = studentMatch[1];
+                            const name = studentMatch[2].trim();
+                            
+                            students.push({
+                                nombre: name,
+                                puntos: pointsValue,
+                                emoji: emoji
+                            });
+                        }
+                    }
                 }
-                
-                filteredStudents = [...allStudents];
-                
-                document.getElementById('loadingState').style.display = 'none';
-                populateGradeFilter();
-                updateStats();
-                renderStudents();
+
+                return students;
             } catch (error) {
-                console.error('Error cargando estudiantes:', error);
-                document.getElementById('loadingState').innerHTML = 
-                    '<h2>❌ Error al cargar datos</h2><p>Verifica que el archivo estudiantes.json existe y tiene formato válido</p>';
+                console.error('Error parsing markdown:', error);
+                return [];
             }
         }
 
-        // Llenar el filtro de grados
-        function populateGradeFilter() {
-            const grades = [...new Set(allStudents.map(s => s.grado))].sort();
-            const select = document.getElementById('gradeFilter');
+        // Cargar datos de todas las secciones
+        async function loadAllSections() {
+            const sections = ['4A', '4B', '4C', '4D'];
             
-            grades.forEach(grade => {
-                const option = document.createElement('option');
-                option.value = grade;
-                option.textContent = `📚 ${grade}`;
-                select.appendChild(option);
+            for (const section of sections) {
+                try {
+                    const response = await fetch(`seccion-${section}.md`);
+                    const text = await response.text();
+                    
+                    // Extraer estudiantes del markdown
+                    const students = extractStudents(text);
+                    sectionsData[section] = students;
+                } catch (error) {
+                    console.error(`Error loading section ${section}:`, error);
+                }
+            }
+            
+            document.getElementById('loadingState').style.display = 'none';
+            loadSection('4A');
+        }
+
+        // Extraer estudiantes del markdown
+        function extractStudents(text) {
+            const students = [];
+            const lines = text.split('\n');
+            
+            let currentPoints = 0;
+            for (const line of lines) {
+                // Detectar línea de puntos
+                const pointsMatch = line.match(/^### Puntos (\d+)/);
+                if (pointsMatch) {
+                    currentPoints = parseInt(pointsMatch[1]);
+                    continue;
+                }
+                
+                // Detectar línea de estudiante
+                const studentMatch = line.match(/^- ([\s\S]) (.+)$/);
+                if (studentMatch && currentPoints >= 0) {
+                    const emoji = studentMatch[1];
+                    const name = studentMatch[2].trim();
+                    
+                    students.push({
+                        nombre: name,
+                        puntos: currentPoints,
+                        emoji: emoji
+                    });
+                }
+            }
+            
+            return students.sort((a, b) => b.puntos - a.puntos);
+        }
+
+        // Cargar sección específica
+        function loadSection(section) {
+            currentSection = section;
+            
+            // Actualizar botones
+            document.querySelectorAll('.section-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            // Resetear búsqueda
+            document.getElementById('searchInput').value = '';
+            
+            filteredStudents = [...sectionsData[section]];
+            updateStats();
+            renderStudents();
         }
 
         // Filtrar estudiantes
         function filterStudents() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const selectedGrade = document.getElementById('gradeFilter').value;
-
-            filteredStudents = allStudents.filter(student => {
-                const matchesSearch = 
-                    student.nombre.toLowerCase().includes(searchTerm) ||
-                    (student.email && student.email.toLowerCase().includes(searchTerm));
-                
-                const matchesGrade = !selectedGrade || student.grado === selectedGrade;
-                
-                return matchesSearch && matchesGrade;
+            
+            filteredStudents = sectionsData[currentSection].filter(student => {
+                return student.nombre.toLowerCase().includes(searchTerm);
             });
-
-            // Ordenar por puntos (mayor a menor)
+            
             filteredStudents.sort((a, b) => b.puntos - a.puntos);
-
             updateStats();
             renderStudents();
         }
@@ -397,7 +498,7 @@
             document.getElementById('minPoints').textContent = min;
         }
 
-        // Renderizar tarjetas de estudiantes
+        // Renderizar tarjetas
         function renderStudents() {
             const container = document.getElementById('studentsList');
             const emptyState = document.getElementById('emptyState');
@@ -415,30 +516,21 @@
                 const card = document.createElement('div');
                 card.className = 'student-card';
                 
-                const initials = student.nombre
-                    .split(' ')
-                    .map(n => n[0])
-                    .join('')
-                    .toUpperCase()
-                    .slice(0, 2);
-
                 const rankEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
 
                 card.innerHTML = `
                     <div class="student-header">
-                        <div class="student-avatar">${initials}</div>
+                        <div class="student-avatar">${student.emoji}</div>
                         <div class="student-info">
                             <h3>${student.nombre}</h3>
-                            <p>${student.grado}</p>
+                            <p>Sección ${currentSection}</p>
                         </div>
                     </div>
-                    <div class="student-grade">Grado: ${student.grado}</div>
                     <div class="points-display">
-                        <div class="label">📊 Puntuación Total</div>
+                        <div class="label">📊 Puntuación</div>
                         <div class="value">${student.puntos}</div>
-                        ${rankEmoji ? `<div class="badge-rank">${rankEmoji} Top ${index + 1}</div>` : ''}
+                        ${rankEmoji ? `<div class="badge-rank">${rankEmoji} Puesto ${index + 1}</div>` : ''}
                     </div>
-                    ${student.email ? `<div class="email">📧 ${student.email}</div>` : ''}
                 `;
                 
                 container.appendChild(card);
@@ -447,13 +539,9 @@
 
         // Event listeners
         document.getElementById('searchInput').addEventListener('input', filterStudents);
-        document.getElementById('gradeFilter').addEventListener('change', filterStudents);
 
         // Cargar datos al iniciar
-        loadStudents();
-
-        // Recargar datos cada 30 segundos (por si se actualizan los puntos)
-        setInterval(loadStudents, 30000);
+        loadAllSections();
     </script>
 </body>
 </html>
