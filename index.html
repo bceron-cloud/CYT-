@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 Mis Puntos - Plataforma Académica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 30px 20px;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+        }
+
+        .search-container input,
+        .search-container select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus,
+        .search-container select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filters select {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .students-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .student-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .student-card.hidden {
+            display: none;
+        }
+
+        .student-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .student-info h3 {
+            color: #333;
+            margin-bottom: 3px;
+            font-size: 1.1em;
+        }
+
+        .student-info p {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .student-grade {
+            background: #f0f0f0;
+            color: #667eea;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .points-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .points-display .label {
+            font-size: 0.85em;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .points-display .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .email {
+            color: #999;
+            font-size: 0.85em;
+            word-break: break-all;
+            padding-top: 10px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state h2 {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 0.95em;
+            }
+
+            .students-list {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filters select {
+                min-width: unset;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .badge-rank {
+            display: inline-block;
+            background: #ffc107;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Mis Puntos</h1>
+            <p>Plataforma de Visualización de Puntos Académicos</p>
+        </div>
+
+        <div class="content">
+            <!-- Búsqueda y Filtros -->
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="🔍 Busca por nombre de estudiante...">
+                <div class="filters">
+                    <select id="gradeFilter">
+                        <option value="">📚 Todos los Grados</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="stats" id="statsContainer">
+                <div class="stat-card">
+                    <h3>Total Estudiantes</h3>
+                    <div class="value" id="totalStudents">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Promedio de Puntos</h3>
+                    <div class="value" id="averagePoints">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Máximo de Puntos</h3>
+                    <div class="value" id="maxPoints">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Mínimo de Puntos</h3>
+                    <div class="value" id="minPoints">0</div>
+                </div>
+            </div>
+
+            <!-- Lista de Estudiantes -->
+            <div id="loadingState" class="loading">
+                ⏳ Cargando datos...
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <h2>No se encontraron estudiantes</h2>
+                <p>Intenta cambiar tus filtros o búsqueda</p>
+            </div>
+            <div class="students-list" id="studentsList"></div>
+        </div>
+    </div>
+
+    <script>
+        let allStudents = [];
+        let filteredStudents = [];
+
+        // Cargar datos desde JSON
+        async function loadStudents() {
+            try {
+                const response = await fetch('estudiantes.json');
+                if (!response.ok) throw new Error('No se pudo cargar el archivo');
+                allStudents = await response.json();
+                
+                // Validar que sea un array
+                if (!Array.isArray(allStudents)) {
+                    allStudents = [];
+                }
+                
+                filteredStudents = [...allStudents];
+                
+                document.getElementById('loadingState').style.display = 'none';
+                populateGradeFilter();
+                updateStats();
+                renderStudents();
+            } catch (error) {
+                console.error('Error cargando estudiantes:', error);
+                document.getElementById('loadingState').innerHTML = 
+                    '<h2>❌ Error al cargar datos</h2><p>Verifica que el archivo estudiantes.json existe y tiene formato válido</p>';
+            }
+        }
+
+        // Llenar el filtro de grados
+        function populateGradeFilter() {
+            const grades = [...new Set(allStudents.map(s => s.grado))].sort();
+            const select = document.getElementById('gradeFilter');
+            
+            grades.forEach(grade => {
+                const option = document.createElement('option');
+                option.value = grade;
+                option.textContent = `📚 ${grade}`;
+                select.appendChild(option);
+            });
+        }
+
+        // Filtrar estudiantes
+        function filterStudents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedGrade = document.getElementById('gradeFilter').value;
+
+            filteredStudents = allStudents.filter(student => {
+                const matchesSearch = 
+                    student.nombre.toLowerCase().includes(searchTerm) ||
+                    (student.email && student.email.toLowerCase().includes(searchTerm));
+                
+                const matchesGrade = !selectedGrade || student.grado === selectedGrade;
+                
+                return matchesSearch && matchesGrade;
+            });
+
+            // Ordenar por puntos (mayor a menor)
+            filteredStudents.sort((a, b) => b.puntos - a.puntos);
+
+            updateStats();
+            renderStudents();
+        }
+
+        // Actualizar estadísticas
+        function updateStats() {
+            const points = filteredStudents.map(s => s.puntos);
+            const total = filteredStudents.length;
+            const average = total > 0 ? Math.round(points.reduce((a, b) => a + b, 0) / total) : 0;
+            const max = total > 0 ? Math.max(...points) : 0;
+            const min = total > 0 ? Math.min(...points) : 0;
+
+            document.getElementById('totalStudents').textContent = total;
+            document.getElementById('averagePoints').textContent = average;
+            document.getElementById('maxPoints').textContent = max;
+            document.getElementById('minPoints').textContent = min;
+        }
+
+        // Renderizar tarjetas de estudiantes
+        function renderStudents() {
+            const container = document.getElementById('studentsList');
+            const emptyState = document.getElementById('emptyState');
+            
+            container.innerHTML = '';
+
+            if (filteredStudents.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            filteredStudents.forEach((student, index) => {
+                const card = document.createElement('div');
+                card.className = 'student-card';
+                
+                const initials = student.nombre
+                    .split(' ')
+                    .map(n => n[0])
+                    .join('')
+                    .toUpperCase()
+                    .slice(0, 2);
+
+                const rankEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+
+                card.innerHTML = `
+                    <div class="student-header">
+                        <div class="student-avatar">${initials}</div>
+                        <div class="student-info">
+                            <h3>${student.nombre}</h3>
+                            <p>${student.grado}</p>
+                        </div>
+                    </div>
+                    <div class="student-grade">Grado: ${student.grado}</div>
+                    <div class="points-display">
+                        <div class="label">📊 Puntuación Total</div>
+                        <div class="value">${student.puntos}</div>
+                        ${rankEmoji ? `<div class="badge-rank">${rankEmoji} Top ${index + 1}</div>` : ''}
+                    </div>
+                    ${student.email ? `<div class="email">📧 ${student.email}</div>` : ''}
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', filterStudents);
+        document.getElementById('gradeFilter').addEventListener('change', filterStudents);
+
+        // Cargar datos al iniciar
+        loadStudents();
+
+        // Recargar datos cada 30 segundos (por si se actualizan los puntos)
+        setInterval(loadStudents, 30000);
+    </script>
+</body>
+</html>
